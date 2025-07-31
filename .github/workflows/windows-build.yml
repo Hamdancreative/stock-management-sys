@@ -2,7 +2,7 @@ name: Build Windows App
 
 on:
   push:
-    branches: [main]  # or your branch name
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.3'  # or your Flutter version
+          flutter-version: '3.29.3'
 
       - name: Enable Windows Desktop
         run: flutter config --enable-windows-desktop
@@ -26,6 +26,11 @@ jobs:
 
       - name: Build Windows App
         run: flutter build windows --release
+
+      - name: List build output
+        run: |
+          dir build\windows\runner\Release
+          dir build\windows\runner
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
