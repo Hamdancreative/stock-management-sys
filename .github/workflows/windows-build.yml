@@ -2,34 +2,33 @@ name: Build Windows App
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [main]  # or your branch name
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          flutter-version: '3.29.3'  # or your Flutter version
 
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Enable Windows desktop
+      - name: Enable Windows Desktop
         run: flutter config --enable-windows-desktop
 
-      - name: Build Windows app
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build Windows App
         run: flutter build windows --release
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
         with:
-          name: windows-build
+          name: windows-app
           path: build/windows/runner/Release/
